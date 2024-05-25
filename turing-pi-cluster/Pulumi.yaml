@@ -1,0 +1,7 @@
+name: turing-pi-cluster
+runtime: go
+description: Bootstrap Turing pi nodes to form a K3s Cluster
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: ""

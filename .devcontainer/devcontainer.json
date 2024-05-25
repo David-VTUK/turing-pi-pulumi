@@ -1,0 +1,26 @@
+{
+	"name": "Go-Pulumi-env",
+	"build": {"dockerfile": "Dockerfile"},
+
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"golang.Go",
+				"GitHub.copilot"
+			]
+		}
+	},
+
+	// Extra args to enable compatibility between Flatpak vscode and podman
+	//"runArgs": ["--privileged","--network=host"],
+	//"privileged": true,
+
+	//"runArgs": ["--userns=keep-id"],
+	//"containerUser": "vscode",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,Z",
+	"workspaceFolder": "/workspace"
+}
