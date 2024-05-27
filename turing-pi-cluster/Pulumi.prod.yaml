@@ -1,0 +1,11 @@
+config:
+  turing-pi-cluster:jno-ssh-password:
+    secure: AAABALldYEHBVljx6fdRzZivbqb3Qmlz5TG47DgbFO48/cnXU9vVL24nRNE6
+  turing-pi-cluster:jno-ssh-username: david
+  turing-pi-cluster:node-1-ip: 172.16.10.224 # RK1 Node
+  turing-pi-cluster:node-2-ip: 172.16.10.225 # RK1 Node
+  turing-pi-cluster:node-3-ip: 172.16.10.226 # RK1 Node
+  turing-pi-cluster:node-4-ip: 172.16.10.227 # Jetson Nano Node
+  turing-pi-cluster:rk1-ssh-password:
+    secure: AAABADA7ZxfwVb97GgeDDGKY0dD6KKNtNTAheNnelGLK3fJLeS1hMObERWVN
+  turing-pi-cluster:rk1-ssh-username: ubuntu
