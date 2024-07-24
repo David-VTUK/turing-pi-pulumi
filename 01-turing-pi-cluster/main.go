@@ -23,6 +23,10 @@ func main() {
 		node1Address := conf.Require("node-1-ip")
 		node2Address := conf.Require("node-2-ip")
 		node3Address := conf.Require("node-3-ip")
+		node4Address := conf.Require("node-4-ip")
+
+		// Get K3s Version
+		k3sVersion := conf.Require("k3s-version")
 
 		// Get Node SSH Values
 		username := conf.Require("ssh-user")
@@ -34,15 +38,10 @@ func main() {
 				{addresss: node1Address, sshKey: sshKey, username: username},
 				{addresss: node2Address, sshKey: sshKey, username: username},
 				{addresss: node3Address, sshKey: sshKey, username: username},
+				{addresss: node4Address, sshKey: sshKey, username: username},
 			}
 
-			// Prep Nodes
-			err := prepNode(ctx, nodes)
-			if err != nil {
-				return fmt.Errorf("failed to prep nodes: %w", err)
-			}
-
-			err = installK3s(ctx, nodes)
+			err := installK3s(ctx, nodes, k3sVersion)
 			if err != nil {
 				return fmt.Errorf("failed to install K3S: %w", err)
 			}
@@ -52,12 +51,10 @@ func main() {
 				return fmt.Errorf("failed to get Kubeconfig: %w", err)
 			}
 
-			/*
-				err = installCilium(ctx, nodes[0])
-				if err != nil {
-					return fmt.Errorf("failed to install Cilium: %w", err)
-				}
-			*/
+			err = installCilium(ctx, nodes[0])
+			if err != nil {
+				return fmt.Errorf("failed to install Cilium: %w", err)
+			}
 
 			return nil
 		})

@@ -1,0 +1,2 @@
+config:
+  02-cni:cilium-version: 1.15.6

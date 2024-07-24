@@ -1,10 +1,14 @@
 # turing-pi-pulumi
 
-# Prerequisites
+# 01-turing-pi-cluster
 
-* Nodes imaged from Turing Pi BMC
-* Networking and username/password configured
+Installs: 
 
-# Steps performed by this script
+* K3s 
+* Cilium (fully replaces kube-proxy)
 
-* Copy ssh
+# 02-applications
+
+Installs:
+
+* Kubevirt
