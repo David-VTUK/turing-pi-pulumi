@@ -7,7 +7,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 )
 
-type node struct {
+type Node struct {
 	addresss string
 	sshKey   string
 	username string
@@ -34,7 +34,7 @@ func main() {
 
 		sshKey.ApplyT(func(sshKey string) error {
 
-			nodes := []node{
+			nodes := []Node{
 				{addresss: node1Address, sshKey: sshKey, username: username},
 				{addresss: node2Address, sshKey: sshKey, username: username},
 				{addresss: node3Address, sshKey: sshKey, username: username},
@@ -44,16 +44,6 @@ func main() {
 			err := installK3s(ctx, nodes, k3sVersion)
 			if err != nil {
 				return fmt.Errorf("failed to install K3S: %w", err)
-			}
-
-			err = getKubeconfig(ctx, nodes[0])
-			if err != nil {
-				return fmt.Errorf("failed to get Kubeconfig: %w", err)
-			}
-
-			err = installCilium(ctx, nodes[0])
-			if err != nil {
-				return fmt.Errorf("failed to install Cilium: %w", err)
 			}
 
 			return nil

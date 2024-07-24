@@ -1,5 +1,4 @@
 config:
-  turing-pi-cluster:installCilium: "true"
   turing-pi-cluster:k3s-version: v1.29.6+k3s1
   turing-pi-cluster:node-1-ip: 172.16.10.220 # RK1 Node
   turing-pi-cluster:node-2-ip: 172.16.10.221 # RK1 Node
