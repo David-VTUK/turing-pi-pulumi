@@ -20,10 +20,10 @@ func installCilium(ctx *pulumi.Context, ciliumVersion string) error {
 		Values: pulumi.Map{
 			"k8sServiceHost": pulumi.String("172.16.10.220"),
 			"k8sServicePort": pulumi.String("6443"),
-			"annotations": pulumi.Map{
-				"meta.helm.sh/release-name":      pulumi.String("helm-chart-cilium"),
-				"meta.helm.sh/release-namespace": pulumi.String("kube-system"),
-			},
+			//			"annotations": pulumi.Map{
+			//				"meta.helm.sh/release-name":      pulumi.String("helm-chart-cilium"),
+			//				"meta.helm.sh/release-namespace": pulumi.String("kube-system"),
+			//			},
 
 			"hubble": pulumi.Map{
 				"enabled": pulumi.String("true"),
@@ -52,18 +52,24 @@ func installCilium(ctx *pulumi.Context, ciliumVersion string) error {
 		},
 		OtherFields: kubernetes.UntypedArgs{
 			"spec": pulumi.Map{
-				"virtualRouters": pulumi.Map{
-					"localASN": pulumi.Int(64512),
-				},
-				"neighbors": pulumi.Array{
+				"virtualRouters": pulumi.Array{
 					pulumi.Map{
-						"peerAddress": pulumi.String("172.16.10.1"),
-						"peerASN":     pulumi.Int(64512),
+						"localASN": pulumi.Int(64511),
+						"neighbors": pulumi.Array{
+							pulumi.Map{
+								"peerAddress": pulumi.String("172.16.10.1/32"),
+								"peerASN":     pulumi.Int(64512),
+							},
+						},
 					},
 				},
 			},
 		},
 	}, pulumi.DependsOn([]pulumi.Resource{ciliumChart}))
+
+	if err != nil {
+		return err
+	}
 
 	_, err = apiextensions.NewCustomResource(ctx, "bgp-ip-pool", &apiextensions.CustomResourceArgs{
 		ApiVersion: pulumi.String("cilium.io/v2alpha1"),
@@ -73,8 +79,10 @@ func installCilium(ctx *pulumi.Context, ciliumVersion string) error {
 		},
 		OtherFields: kubernetes.UntypedArgs{
 			"spec": pulumi.Map{
-				"cidrs": pulumi.StringArray{
-					pulumi.String("10.50.20.0/24"),
+				"cidrs": pulumi.Array{
+					pulumi.Map{
+						"cidr": pulumi.String("10.50.20.0/24"),
+					},
 				},
 			},
 		},
