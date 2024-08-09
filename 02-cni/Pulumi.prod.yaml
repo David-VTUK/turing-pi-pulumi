@@ -1,2 +1,5 @@
 config:
-  02-cni:cilium-version: 1.15.7
+  02-cni:cilium-version: 1.16.0
+  02-cni:k8s-cluster-pool-cidr: 10.42.0.0/16
+  02-cni:k8s-service-host: 172.16.10.220
+  02-cni:k8s-service-port: "6443"
