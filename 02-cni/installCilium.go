@@ -123,7 +123,6 @@ func installCilium(ctx *pulumi.Context, ciliumVersion, k8sClusterPoolCidr, k8sSe
 		},
 	}, pulumi.DependsOn([]pulumi.Resource{ciliumChart}))
 
-
 	if err != nil {
 		return err
 	}
@@ -145,6 +144,15 @@ func installCilium(ctx *pulumi.Context, ciliumVersion, k8sClusterPoolCidr, k8sSe
 						"service": pulumi.Map{
 							"addresses": pulumi.StringArray{
 								pulumi.String("LoadBalancerIP"),
+							},
+						},
+						"selector": pulumi.Map{
+							"matchExpressions": pulumi.Array{
+								pulumi.Map{
+									"key":      pulumi.String("somekey"),
+									"operator": pulumi.String("NotIn"),
+									"values":   pulumi.StringArray{pulumi.String("never-used-value")},
+								},
 							},
 						},
 					},
